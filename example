@@ -1,0 +1,137 @@
+
+// import 'package:flutter/material.dart';
+// import 'package:hive_flutter/hive_flutter.dart';
+
+// import '../models/todo.dart';
+
+// class TodoListScreen extends StatefulWidget {
+//   @override
+//   _TodoListScreenState createState() => _TodoListScreenState();
+// }
+
+// class _TodoListScreenState extends State<TodoListScreen> {
+//   late Box<Todo> todoBox;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     todoBox = Hive.box<Todo>('todos');
+//   }
+
+//   void _addTodo() {
+//     final _todoController = TextEditingController();
+//     showDialog(
+//       context: context,
+//       builder: (context) {
+//         return AlertDialog(
+//           title: Text('Add Todo'),
+//           content: TextField(
+//             controller: _todoController,
+//             decoration: InputDecoration(labelText: 'Todo'),
+//           ),
+//           actions: <Widget>[
+//             TextButton(
+//               child: Text('Cancel'),
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//               },
+//             ),
+//             TextButton(
+//               child: Text('Add'),
+//               onPressed: () {
+//                 final todo = Todo(
+//                   title: _todoController.text,
+//                   isCompleted: false,
+//                 );
+//                 todoBox.add(todo);
+//                 Navigator.of(context).pop();
+//                 setState(() {});
+//               },
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+
+//   void _editTodo(Todo todo) {
+//     final _todoController = TextEditingController(text: todo.title);
+//     showDialog(
+//       context: context,
+//       builder: (context) {
+//         return AlertDialog(
+//           title: Text('Edit Todo'),
+//           content: TextField(
+//             controller: _todoController,
+//             decoration: InputDecoration(labelText: 'Todo'),
+//           ),
+//           actions: <Widget>[
+//             TextButton(
+//               child: Text('Cancel'),
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//               },
+//             ),
+//             TextButton(
+//               child: Text('Save'),
+//               onPressed: () {
+//                 todo.title = _todoController.text;
+//                 todo.save();
+//                 Navigator.of(context).pop();
+//                 setState(() {});
+//               },
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+
+//   void _deleteTodo(Todo todo) {
+//     todo.delete();
+//     setState(() {});
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Todo List')),
+//       body: ValueListenableBuilder(
+//         valueListenable: todoBox.listenable(),
+//         builder: (context, Box<Todo> box, _) {
+//           if (box.values.isEmpty) {
+//             return Center(child: Text('No todos yet'));
+//           }
+
+//           return ListView.builder(
+//             itemCount: box.length,
+//             itemBuilder: (context, index) {
+//               final todo = box.getAt(index) as Todo;
+
+//               return ListTile(
+//                 title: Text(todo.title),
+//                 trailing: Row(
+//                   mainAxisSize: MainAxisSize.min,
+//                   children: [
+//                     IconButton(
+//                       icon: Icon(Icons.edit),
+//                       onPressed: () => _editTodo(todo),
+//                     ),
+//                     IconButton(
+//                       icon: Icon(Icons.delete),
+//                       onPressed: () => _deleteTodo(todo),
+//                     ),
+//                   ],
+//                 ),
+//               );
+//             },
+//           );
+//         },
+//       ),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: _addTodo,
+//         child: Icon(Icons.add),
+//       ),
+//     );
+//   }
+// }
